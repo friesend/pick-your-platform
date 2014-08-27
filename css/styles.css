@@ -1,125 +1,100 @@
-		@font-face {
-			font-family: 'StagLight';
-			src: url('/ns/fonts/stag-light-webfont.eot');
-			src: url('/ns/fonts/stag-light-webfont.eot?#iefix') format('embedded-opentype'),
-				 url('/ns/fonts/stag-light-webfont.woff') format('woff'),
-				 url('/ns/fonts/stag-light-webfont.ttf') format('truetype'),
-				 url('/ns/fonts/stag-light-webfont.svg#StagBook') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		
-		}
-		
-		@font-face {
-			font-family: 'StagBook';
-			src: url('/ns/fonts/stag-book-webfont.eot');
-			src: url('/ns/fonts/stag-book-webfont.eot?#iefix') format('embedded-opentype'),
-				 url('/ns/fonts/stag-book-webfont.woff') format('woff'),
-				 url('/ns/fonts/stag-book-webfont.ttf') format('truetype'),
-				 url('/ns/fonts/stag-book-webfont.svg#StagBook') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		
-		}
-		
-		@font-face {
-			font-family: 'StagMedium';
-			src: url('/ns/fonts/stag-medium-webfont.eot');
-			src: url('/ns/fonts/stag-medium-webfont.eot?#iefix') format('embedded-opentype'),
-				 url('/ns/fonts/stag-medium-webfont.woff') format('woff'),
-				 url('/ns/fonts/stag-medium-webfont.ttf') format('truetype'),
-				 url('/ns/fonts/stag-medium-webfont.svg#StagMedium') format('svg');
-			font-weight: normal;
-			font-style: normal;
-		
-		}
-		#Interactive { margin-bottom:24px; margin-top:-20px;}
-		#Interactive *, #Links * {font-family: 'StagMedium'; font-style:normal; font-weight:normal; text-decoration: none;}
-		#Interactive h2 {font-size:64px; letter-spacing:2px; }
-		#Interactive h3 { letter-spacing:1px; position:relative; font-size:30px; line-height:32px; height:36px; cursor:pointer; background-color:#f6f6f6; color:#242424; padding:0 4px 0 40px; margin-bottom:12px;
-			-webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;
-			margin-right:5px;margin-top:10px;
-		}
-		#Interactive h3 span {
-			width:30px; height:30px; display:block; position:absolute; left:5px; top:6px; 
-			background:transparent url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAALnSURBVEhLrZY/aNNREMeTXzPYksHBQdoMGUxbSkXSpK2gULcKCnas0MEODoIOgqWrRcHJujpEonQQh2LrVKVCgxWEtMVABMFCW0iTDg4iqNikiZ/vy2vMX2v/fOHy7t293929e/fuxe36B7q6urwtLS1DhUJh0O12+xH5ihrXFpTK5/Ovkc8sLy9/LYprUdeBDDc3N9+BHcdACgczjuN8wuC69MjkqAP5ZcZu5o/hJ+o5qnHQ29sbxtBL8Ri9Ho/H54yiAXp6es6yLgp7EkdXq9c32dEgHA4PE8ksC1/lcrkrKysrSatqiEwmkwoEAk+2t7eP8+1kW1vbj3Q6/cGq/0KRh0KhXzgZsaJ9g+8vQFl2pdQZmB0o5x6P550iX1paumc0BwC7WW9tbW0iZQ99Pt/U5ubmd0cKe6CubDZ7W2M9sMNr7K4gIsq7VlwDr9d7n1Stco4mUEfRM47rQBOJxDcJD4NYLJbD1ihORoLB4ClHdU5qUntVy36ArY8MCzgadvA0CM0UVUcKVeOghx8/9NYKS1DOLWtAEOcsq4t2plpP1E8tu4sk34y7ObQ1mFFu4YJVGOgwLftfoPoqLm1/f79/Z2dnTSnyMM8VxUcPRwesNNl5CTieKCdE5ee0UEdfATqBD/mWok9BHUZaBlJWUevKOR8MiWeMVeurwZpOBe+o5TIpXe2jAiV6CQdzSpG23q1eVFQdHjpggr6I7WlHPRxG/XxqYGDgmF1zKFA9UWzO68KZ0qK3nEDwBScRHI6ZVQcEtm4yPIJOY+uz6aZ0wZ/08QQOJumG79UVJd8vMK6DfYGdW7wlbyQrPTg8Eqs4+Q37TC23vb19cWNjI1/U7g1Fbo1HMP7AimufTD0WVMBzFq6qK9rG1RD2xkZZfx66gfGIVRnUOBD6+vp86ud8MMx0EZqFkjxKJnX2EnWqFBlVLfOMY8q59OWo62AXpp/TcjGgjqumaP62wJu/LcznoOnGu3S5/gDwHX69fcclgQAAAABJRU5ErkJggg%3D%3D") no-repeat;
-			
-		}
-		#Interactive h3.metanav, #Interactive a.storytool  {display:none;}
-		#Interactive #sharecount { margin:50px 0 0 0;}
-		#Totals { margin-top:24px; }
-		#Interactive #Totals h3 { font-size:24px; line-height:30px; background:transparent; padding-left:0; }
-		#Interactive #Totals h3 a { color:#666; }
-		#Interactive #Totals h3 em { font-style:normal; color:#242424; margin-left:24px; }
-		#Interactive h3.active { 
-			-webkit-border-bottom-right-radius: 3px;-webkit-border-bottom-left-radius: 3px;
-			-moz-border-radius-bottomright: 3px;-moz-border-radius-bottomleft: 3px;
-			border-bottom-right-radius: 3px;border-bottom-left-radius: 3px;	text-decoration: none;
-		}
-		#Interactive h3.active span { background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKlSURBVEhLtZY/aNNREMeTXzOYkMGxJBkymDSGDua/QyFuERTULYJLBwdBB8HiXBSc7OxQCdJBHIqpUyodClYU8geFFBwCbSB/BJ0kKuavn3t5rX+S2D+JX7jce3fvd3fv3r17MZv+Ab/fb7fZbJd7vV7CbDa7Ebn6GtNHqNLtdteRp/P5/Oe+eBBDHYhhq9V6h+FdDFRwkDYMYxuDu6JHJo5mkF+EzzJ/xHhxmKMBB5FIJIyh5zLG6PVsNptRihEIBoNnWZdiOI2jq3+vn9JcIRwOJ4lkjYUv2u32pUKhUNSqkajX6xWPx/O42Wye5Nslp9P5tVarvdXqX5DIQ6HQd5xc06Ijg+/PQS12JalTUDuQnFssllcSeS6Xu6c0xwC72XU4HFOk7KHL5VqpVqtfDFHoAzW1Wq3bwseB3W6/T6pKnKMK1Kwr5hNerxx0oIcF6T6Dgyx02pA6JzWVSRkXYOsdbJOgkwbbSUDpvmqikGpMGPy48bSthZNEkcDdZspyh8E8t3BTKxSQ9/TwUKD6/ri0sVjM3el0diRFFubtvvg/gEjfjHO5RoELNwfV5R5UoBklnSDIjA9WMajVdSb7V3tSoHAuUEAZqSIp0VnpRX3V+JADJujz2F41pIczkH6+Eo/HT+g1Y4HqSWFzQy6c6kUYX4RNNxqNYze6PXCwN7E3By3IXHVTuuA3+vh7hEt0w9fSFUV+VGDcR+TPsHOLt+SlyPYfHB6JEk5+MHwiLdfr9W6Vy+VuX3swJHJtfBnjD7R48MmUx4IKeMrCEnxeN66R0Dc2xXpJyw2ML2uVwtBHPxqNuqSf80GS6Ra0BhV5lFTqeE5d6HxSinCplg34AgXzQfS/Y6iDPQQCgVMYSWJAOq4brv62MFZ/W5hnoNXRuzSZfgLYkUQRTJGc4wAAAABJRU5ErkJggg%3D%3D");  }
-		#Interactive h4 {font-family: arial, sans-serif; font-weight:bold;font-size:20px; line-height:24px; background:#242424; color:#fff; padding:5px 4px; margin-bottom:8px; }
-		#Interactive h4:first-child{ border-right:5px solid #fff;  }
-		#Interactive h4:last-child{ border-left:5px solid #fff;  }
-		#Interactive p {font-family: arial, sans-serif; font-size:20px; line-height:24px; }
-		#Interactive ol { margin-left:24px; }
-		#Interactive ol li {font-family: arial, sans-serif;  font-weight:bold; font-size:18px; line-height:24px; }
-		ul.sortable { }
-		ul.sortable li { position: relative; }
-		
-		#Interactive .split { width:472px; float:left; }
-		#Interactive ul {
-			list-style-type: none; padding:10px 10px 10px 17px; margin:0; position:relative; 
-			-webkit-border-bottom-right-radius: 3px;-webkit-border-bottom-left-radius: 3px;
-			-moz-border-radius-bottomright: 3px;-moz-border-radius-bottomleft: 3px;
-			border-bottom-right-radius: 3px;border-bottom-left-radius: 3px;
-		}
-		#Interactive ul li {
-			margin-bottom:8px; padding:4px 5px; cursor:move;position:relative; 
-			-webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;
-			width:428px;
-		}
-		#Interactive ul li.drag{}
-		#Interactive ul.boxy { background:#f6f6f6; display:none; top:-8px; border-right:5px solid #fff; }
-		#Interactive ul.boxy.active { display:block; }
-		#Interactive ul.boxy li { background-color:#fff; border:1px dashed #ccc; }
-		#Interactive ul.boxier { 
-			background:#f2f2f2 url(/elections/nsvotes2013/content/features/pick-your-platform/images/drag.png) no-repeat center center; 
-			border:1px dashed #ccc; border-right:5px solid #fff; 
-			min-height:670px; /*position:absolute; width:500px;*/ 
-			padding-bottom:60px; 
-		}
-		#Interactive ul.boxier li { 
-			background-color: #fff; border-top:8px solid #242424; 
-			box-shadow:0 4px 5px 0 rgba(0,0,0,.2);
-		}
-		#Interactive ul li:last-child { margin-bottom:0; }	
-		#S1 {}	
-	/*	
-		
-		 { 
-			display:block;  background-color:#e2e2e2; 
-			height:54px; margin-top:20px;
-			line-height:54px; 
-			font-size:30px;
-			text-align:Center;  
-			color:#242424;
-			text-decoration:none
-			;letter-spacing:2px;
-			-webkit-border-radius:3px; 
-			-moz-border-radius:3px; 
-			border-radius:3px;
-		}
+@font-face {
+	font-family: 'StagLight';
+	src: url('/ns/fonts/stag-light-webfont.eot');
+	src: url('/ns/fonts/stag-light-webfont.eot?#iefix') format('embedded-opentype'),
+		url('/ns/fonts/stag-light-webfont.woff') format('woff'),
+		url('/ns/fonts/stag-light-webfont.ttf') format('truetype'),
+		url('/ns/fonts/stag-light-webfont.svg#StagBook') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
 
+@font-face {
+	font-family: 'StagBook';
+	src: url('/ns/fonts/stag-book-webfont.eot');
+	src: url('/ns/fonts/stag-book-webfont.eot?#iefix') format('embedded-opentype'),
+		url('/ns/fonts/stag-book-webfont.woff') format('woff'),
+		url('/ns/fonts/stag-book-webfont.ttf') format('truetype'),
+		url('/ns/fonts/stag-book-webfont.svg#StagBook') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
 
-		*/
-		
-		
-		
-		
-		#Submit {
-		font-family: 'StagMedium';
-		padding-top:15px;
-		letter-spacing:2px;
+@font-face {
+	font-family: 'StagMedium';
+	src: url('/ns/fonts/stag-medium-webfont.eot');
+	src: url('/ns/fonts/stag-medium-webfont.eot?#iefix') format('embedded-opentype'),
+		url('/ns/fonts/stag-medium-webfont.woff') format('woff'),
+		url('/ns/fonts/stag-medium-webfont.ttf') format('truetype'),
+		url('/ns/fonts/stag-medium-webfont.svg#StagMedium') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+#Interactive { margin-bottom:24px; margin-top:-20px;}
+#Interactive *, #Links * {font-family: 'StagMedium'; font-style:normal; font-weight:normal; text-decoration: none;}
+#Interactive h2 {font-size:64px; letter-spacing:2px; }
+#Interactive h3 { letter-spacing:1px; position:relative; font-size:30px; line-height:32px; height:36px; cursor:pointer; background-color:#f6f6f6; color:#242424; padding:0 4px 0 40px; margin-bottom:12px;
+	-webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;
+	margin-right:5px;margin-top:10px;
+}
+#Interactive h3 span {
+	width:30px; height:30px; display:block; position:absolute; left:5px; top:6px; 
+	background:transparent url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAALnSURBVEhLrZY/aNNREMeTXzPYksHBQdoMGUxbSkXSpK2gULcKCnas0MEODoIOgqWrRcHJujpEonQQh2LrVKVCgxWEtMVABMFCW0iTDg4iqNikiZ/vy2vMX2v/fOHy7t293929e/fuxe36B7q6urwtLS1DhUJh0O12+xH5ihrXFpTK5/Ovkc8sLy9/LYprUdeBDDc3N9+BHcdACgczjuN8wuC69MjkqAP5ZcZu5o/hJ+o5qnHQ29sbxtBL8Ri9Ho/H54yiAXp6es6yLgp7EkdXq9c32dEgHA4PE8ksC1/lcrkrKysrSatqiEwmkwoEAk+2t7eP8+1kW1vbj3Q6/cGq/0KRh0KhXzgZsaJ9g+8vQFl2pdQZmB0o5x6P550iX1paumc0BwC7WW9tbW0iZQ99Pt/U5ubmd0cKe6CubDZ7W2M9sMNr7K4gIsq7VlwDr9d7n1Stco4mUEfRM47rQBOJxDcJD4NYLJbD1ihORoLB4ClHdU5qUntVy36ArY8MCzgadvA0CM0UVUcKVeOghx8/9NYKS1DOLWtAEOcsq4t2plpP1E8tu4sk34y7ObQ1mFFu4YJVGOgwLftfoPoqLm1/f79/Z2dnTSnyMM8VxUcPRwesNNl5CTieKCdE5ee0UEdfATqBD/mWok9BHUZaBlJWUevKOR8MiWeMVeurwZpOBe+o5TIpXe2jAiV6CQdzSpG23q1eVFQdHjpggr6I7WlHPRxG/XxqYGDgmF1zKFA9UWzO68KZ0qK3nEDwBScRHI6ZVQcEtm4yPIJOY+uz6aZ0wZ/08QQOJumG79UVJd8vMK6DfYGdW7wlbyQrPTg8Eqs4+Q37TC23vb19cWNjI1/U7g1Fbo1HMP7AimufTD0WVMBzFq6qK9rG1RD2xkZZfx66gfGIVRnUOBD6+vp86ud8MMx0EZqFkjxKJnX2EnWqFBlVLfOMY8q59OWo62AXpp/TcjGgjqumaP62wJu/LcznoOnGu3S5/gDwHX69fcclgQAAAABJRU5ErkJggg%3D%3D") no-repeat;
+}
+#Interactive h3.metanav, #Interactive a.storytool  {display:none;}
+#Interactive #sharecount { margin:50px 0 0 0;}
+#Totals { margin-top:24px; }
+#Interactive #Totals h3 { font-size:24px; line-height:30px; background:transparent; padding-left:0; }
+#Interactive #Totals h3 a { color:#666; }
+#Interactive #Totals h3 em { font-style:normal; color:#242424; margin-left:24px; }
+#Interactive h3.active { 
+	-webkit-border-bottom-right-radius: 3px;-webkit-border-bottom-left-radius: 3px;
+	-moz-border-radius-bottomright: 3px;-moz-border-radius-bottomleft: 3px;
+	border-bottom-right-radius: 3px;border-bottom-left-radius: 3px;	text-decoration: none;
+}
+#Interactive h3.active span { background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKlSURBVEhLtZY/aNNREMeTXzOYkMGxJBkymDSGDua/QyFuERTULYJLBwdBB8HiXBSc7OxQCdJBHIqpUyodClYU8geFFBwCbSB/BJ0kKuavn3t5rX+S2D+JX7jce3fvd3fv3r17MZv+Ab/fb7fZbJd7vV7CbDa7Ebn6GtNHqNLtdteRp/P5/Oe+eBBDHYhhq9V6h+FdDFRwkDYMYxuDu6JHJo5mkF+EzzJ/xHhxmKMBB5FIJIyh5zLG6PVsNptRihEIBoNnWZdiOI2jq3+vn9JcIRwOJ4lkjYUv2u32pUKhUNSqkajX6xWPx/O42Wye5Nslp9P5tVarvdXqX5DIQ6HQd5xc06Ijg+/PQS12JalTUDuQnFssllcSeS6Xu6c0xwC72XU4HFOk7KHL5VqpVqtfDFHoAzW1Wq3bwseB3W6/T6pKnKMK1Kwr5hNerxx0oIcF6T6Dgyx02pA6JzWVSRkXYOsdbJOgkwbbSUDpvmqikGpMGPy48bSthZNEkcDdZspyh8E8t3BTKxSQ9/TwUKD6/ri0sVjM3el0diRFFubtvvg/gEjfjHO5RoELNwfV5R5UoBklnSDIjA9WMajVdSb7V3tSoHAuUEAZqSIp0VnpRX3V+JADJujz2F41pIczkH6+Eo/HT+g1Y4HqSWFzQy6c6kUYX4RNNxqNYze6PXCwN7E3By3IXHVTuuA3+vh7hEt0w9fSFUV+VGDcR+TPsHOLt+SlyPYfHB6JEk5+MHwiLdfr9W6Vy+VuX3swJHJtfBnjD7R48MmUx4IKeMrCEnxeN66R0Dc2xXpJyw2ML2uVwtBHPxqNuqSf80GS6Ra0BhV5lFTqeE5d6HxSinCplg34AgXzQfS/Y6iDPQQCgVMYSWJAOq4brv62MFZ/W5hnoNXRuzSZfgLYkUQRTJGc4wAAAABJRU5ErkJggg%3D%3D");  }
+#Interactive h4 {font-family: arial, sans-serif; font-weight:bold;font-size:20px; line-height:24px; background:#242424; color:#fff; padding:5px 4px; margin-bottom:8px; }
+#Interactive h4:first-child{ border-right:5px solid #fff;  }
+#Interactive h4:last-child{ border-left:5px solid #fff;  }
+#Interactive p {font-family: arial, sans-serif; font-size:20px; line-height:24px; }
+#Interactive ol { margin-left:24px; }
+#Interactive ol li {font-family: arial, sans-serif;  font-weight:bold; font-size:18px; line-height:24px; }
+ul.sortable { }
+ul.sortable li { position: relative; }
+
+#Interactive .split { width:472px; float:left; }
+#Interactive ul {
+	list-style-type: none; padding:10px 10px 10px 17px; margin:0; position:relative; 
+	-webkit-border-bottom-right-radius: 3px;-webkit-border-bottom-left-radius: 3px;
+	-moz-border-radius-bottomright: 3px;-moz-border-radius-bottomleft: 3px;
+	border-bottom-right-radius: 3px;border-bottom-left-radius: 3px;
+}
+#Interactive ul li {
+	margin-bottom:8px; padding:4px 5px; cursor:move;position:relative; 
+	-webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;
+	width:428px;
+}
+#Interactive ul li.drag{}
+#Interactive ul.boxy { background:#f6f6f6; display:none; top:-8px; border-right:5px solid #fff; }
+#Interactive ul.boxy.active { display:block; }
+#Interactive ul.boxy li { background-color:#fff; border:1px dashed #ccc; }
+#Interactive ul.boxier { 
+	background:#f2f2f2 url(/elections/nsvotes2013/content/features/pick-your-platform/images/drag.png) no-repeat center center; 
+	border:1px dashed #ccc; border-right:5px solid #fff; 
+	min-height:670px; /*position:absolute; width:500px;*/ 
+	padding-bottom:60px; 
+}
+#Interactive ul.boxier li { 
+	background-color: #fff; border-top:8px solid #242424; 
+	box-shadow:0 4px 5px 0 rgba(0,0,0,.2);
+}
+#Interactive ul li:last-child { margin-bottom:0; }	
+#S1 {}
+
+#Submit {
+	font-family: 'StagMedium';
+	padding-top:15px;
+	letter-spacing:2px;
 	-moz-box-shadow:inset 0px 1px 0px 0px #bee2f9;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #bee2f9;
 	box-shadow:inset 0px 1px 0px 0px #bee2f9;
@@ -152,8 +127,8 @@
 	text-decoration:none;
 	text-align:center;
 	margin-bottom: 7px;
-
 }
+
 #Submit:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #115278), color-stop(1, #3399cc) );
 	background:-moz-linear-gradient( center top, #115278 5%, #3399cc 100% );
@@ -166,77 +141,68 @@
 	top:1px;
 }
 
-		
-		
-		
-		
-	
-		
-		
-		
-		#Interactive ul.boxier li.LIB, #Interactive .module.LIB { border-top-color:red;  }
-		#Interactive ul.boxier li.LIB i { background-color:red; }
-		#Interactive ul.boxier li.CON,#Interactive .module.CON { border-top-color:blue; }
-		#Interactive ul.boxier li.CON i { background-color:blue; }
-		#Interactive ul.boxier li.NDP,#Interactive .module.NDP { border-top-color:orange;}
-		#Interactive ul.boxier li.NDP i { background-color:orange;}
-		#Interactive ul.boxier li.GRN,#Interactive .module.GRN { border-top-color:green; }
-		#Interactive ul.boxier li.GRN i { background-color:green; }
-		#Interactive ul.boxier li.PA,#Interactive .module.PA { border-top-color:purple; }
-		#Interactive ul.boxier li.PA i { background-color:purple; }
-		#Interactive .col6 { margin-top:24px; }
-		#Interactive .scroller {  }
-		#Interactive li p i { 
-			position:absolute; top:0; left:0;
-			font-size:10px;  color:#fff;text-transform:uppercase; font-family: 'StagBook';
-			background:#242424; padding:0 10px;
-			-webkit-border-bottom-right-radius: 3px; -moz-border-radius-bottomright: 3px;border-bottom-right-radius: 3px;
-		}
-		#Interactive .boxier li p { margin-top:20px; }
-		#Interactive .boxy li p i { display:none; }
-		#Closing { margin-top:36px; }
-		#Closing h2 { font-size:24px; line-height:30px; }
-		#Closing ul { margin-left:0; padding:0; }
-		#Closing ul li { font-size:18px; line-height:24px; }
-		#Closing ul li a { font-family: arial, sans-serif;  font-weight:bold; font-size:18px; line-height:24px; }
-		
-		
-		div.module.col3.NDP {
-			border-top: 3px solid orange;
-			width: 17%;
-			float: left;
-			margin-right:25px;
-			}
-			
-					
-		div.module.col3.LIB {
-			border-top: 3px solid red;
-			width: 17%;
-			float: left;
-			margin-right:25px;
-			}
-			
-					
-		div.module.col3.GRN {
-			border-top: 3px solid green;
-			width: 17%;
-			float: left;
-			margin-right:25px;
-			}
-			
-			div.module.col3.CON {
-			border-top: 3px solid blue;
-			width: 17%;
-			float: left;
-			margin-right:25px;
-			}
-			
-			div.module.col3.PA {
-			border-top: 3px solid purple;
-			width: 17%;
-			float: left;
-			
-		body {
-		margin: 0;
-		padding: 0;
-		}	
+#Interactive ul.boxier li.LIB, #Interactive .module.LIB { border-top-color:red;  }
+#Interactive ul.boxier li.LIB i { background-color:red; }
+#Interactive ul.boxier li.CON,#Interactive .module.CON { border-top-color:blue; }
+#Interactive ul.boxier li.CON i { background-color:blue; }
+#Interactive ul.boxier li.NDP,#Interactive .module.NDP { border-top-color:orange;}
+#Interactive ul.boxier li.NDP i { background-color:orange;}
+#Interactive ul.boxier li.GRN,#Interactive .module.GRN { border-top-color:green; }
+#Interactive ul.boxier li.GRN i { background-color:green; }
+#Interactive ul.boxier li.PA,#Interactive .module.PA { border-top-color:purple; }
+#Interactive ul.boxier li.PA i { background-color:purple; }
+#Interactive .col6 { margin-top:24px; }
+#Interactive .scroller {  }
+#Interactive li p i { 
+	position:absolute; top:0; left:0;
+	font-size:10px;  color:#fff;text-transform:uppercase; font-family: 'StagBook';
+	background:#242424; padding:0 10px;
+	-webkit-border-bottom-right-radius: 3px; -moz-border-radius-bottomright: 3px;border-bottom-right-radius: 3px;
+}
+
+#Interactive .boxier li p { margin-top:20px; }
+#Interactive .boxy li p i { display:none; }
+#Closing { margin-top:36px; }
+#Closing h2 { font-size:24px; line-height:30px; }
+#Closing ul { margin-left:0; padding:0; }
+#Closing ul li { font-size:18px; line-height:24px; }
+#Closing ul li a { font-family: arial, sans-serif;  font-weight:bold; font-size:18px; line-height:24px; }
+
+div.module.col3.NDP {
+	border-top: 3px solid orange;
+	width: 17%;
+	float: left;
+	margin-right:25px;
+}
+
+div.module.col3.LIB {
+	border-top: 3px solid red;
+	width: 17%;
+	float: left;
+	margin-right:25px;
+}
+
+div.module.col3.GRN {
+	border-top: 3px solid green;
+	width: 17%;
+	float: left;
+	margin-right:25px;
+}
+
+div.module.col3.CON {
+	border-top: 3px solid blue;
+	width: 17%;
+	float: left;
+	margin-right:25px;
+}
+
+div.module.col3.PA {
+	border-top: 3px solid purple;
+	width: 17%;
+	float: left;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
