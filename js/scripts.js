@@ -41,13 +41,15 @@ jQuery(function($) {
 	
 	$("#Interactive h3").bind("click", function() {
 
-		if ( $( this ).next("ul").hasClass( "active" ) ) {
+		debugger;
+
+		/*if ( $( this ).next("ul").hasClass( "active" ) ) {
 			$( this ).next("ul").removeClass( "active" );
 		}
 		else
 		{
 			//$("*").removeClass("active");
-		}
+		}*/
 
 		$( this ).next("ul").addClass( "active" );
 });
@@ -553,7 +555,7 @@ onDragStart : function(nwPosition, sePosition, nwOffset, seOffset) {
 	}
 	
 	// item starts out over current parent
-	this.parentNode.onDragOver();
+	//this.parentNode.onDragOver();
 },
 
 onDrag : function(nwPosition, sePosition, nwOffset, seOffset) {
