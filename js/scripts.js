@@ -38,27 +38,21 @@ jQuery(function($) {
 		return false;
 	});
 	
-	
 	$("#Interactive h3").bind("click", function() {
+		var duration = 200; // milliseconds
+		var list = $(this).next("ul");
 
-		debugger;
-
-		/*if ( $( this ).next("ul").hasClass( "active" ) ) {
-			$( this ).next("ul").removeClass( "active" );
+		if ( list.hasClass( "active" ) ) {
+			list.animate({height:'0px'}, duration, function closeComplete() {
+				list.removeClass( "active" );
+			});
+		} else {
+			list.animate({height:'100%'}, duration, function openComplete() {
+				list.addClass( "active" );
+			});
 		}
-		else
-		{
-			//$("*").removeClass("active");
-		}*/
+	});
 
-		$( this ).next("ul").addClass( "active" );
-});
-
-
-
-
-	
-	
 	function AddParties() {
 			$("#Total_NDP em").text($("#Selected .NDP").length);
 			$("#Total_GRN em").text($("#Selected .GRN").length);
