@@ -90,50 +90,26 @@
 				minHeight:min_heights-240
 			});
 
-		if ( list.hasClass( "active" ) ) {
-			list.animate({height:'0px'}, duration, function closeComplete() {
-				list.removeClass( "active" );
-			});
-		} else {
-			list.animate({height:'100%'}, duration, function openComplete() {
-				list.addClass( "active" );
+			$("#Interactive .scroller ul.boxier").css({
+				minHeight:min_heights-240
 			});
 		}
+		
+		simulateTouchEvents("ul.sortable");
+		
 	});
-
-	function AddParties() {
-			$("#Total_NDP em").text($("#Selected .NDP").length);
-			$("#Total_GRN em").text($("#Selected .GRN").length);
-			$("#Total_LIB em").text($("#Selected .LIB").length);
-			$("#Total_CON em").text($("#Selected .CON").length);
-			$("#Total_PA em").text($("#Selected .PA").length);
-	}
-	
-	function updateHeights() {
-		var min_heights=$("#Draggable").height()-100;
-		$("#Interactive .scroller ul.boxy").css({
-			minHeight:min_heights-240
-		});
-
-		$("#Interactive .scroller ul.boxier").css({
-			minHeight:min_heights-240
-		});
-	}
-	
-	simulateTouchEvents("ul.sortable");
-	
-});
 
 
 function simulateTouchEvents(oo,bIgnoreChilds)
 {
-	if( !$(oo)[0] ) { return false; }
+ if( !$(oo)[0] )
+  { return false; }
 
-	if( !window.__touchTypes )
-	{
-		window.__touchTypes  = {touchstart:'mousedown',touchmove:'mousemove',touchend:'mouseup'};
-		window.__touchInputs = {INPUT:1,TEXTAREA:1,SELECT:1,OPTION:1,'input':1,'textarea':1,'select':1,'option':1};
-	}
+ if( !window.__touchTypes )
+ {
+   window.__touchTypes  = {touchstart:'mousedown',touchmove:'mousemove',touchend:'mouseup'};
+   window.__touchInputs = {INPUT:1,TEXTAREA:1,SELECT:1,OPTION:1,'input':1,'textarea':1,'select':1,'option':1};
+ }
 
 $(oo).bind('touchstart touchmove touchend', function(ev)
 {
@@ -169,44 +145,18 @@ $(oo).bind('touchstart touchmove touchend', function(ev)
  return true;
 }
 
-		var b = (!bSame && ev.target.__ajqmeclk), // Get if object is already tested or input type
-			e = ev.originalEvent;
 
-		//allow multi-touch gestures to work
-		if( b === true || !e.touches || e.touches.length > 1 || !window.__touchTypes[e.type]  ) 
-		{ return; } 
 
-		var oEv = ( !bSame && typeof b != 'boolean')?$(ev.target).data('events'):false;
 
-		b = (!bSame)?(ev.target.__ajqmeclk = oEv?(oEv.click || oEv.mousedown || oEv.mouseup || oEv.mousemove):false ):false;
 
-		//allow default clicks to work (and on inputs)
-		if( b || window.__touchInputs[ev.target.tagName] ) { return; }
-
-		// https://developer.mozilla.org/en/DOM/event.initMouseEvent for API
-		var touch = e.changedTouches[0], newEvent = document.createEvent("MouseEvent");
-		newEvent.initMouseEvent(window.__touchTypes[e.type], true, true, window, 1,
-			touch.screenX, touch.screenY,
-			touch.clientX, touch.clientY, false,
-			false, false, false, 0, null);
-
-		touch.target.dispatchEvent(newEvent);
-		e.preventDefault();
-		ev.stopImmediatePropagation();
-		ev.stopPropagation();
-		ev.preventDefault();
-	});
-
-	return true;
-}
 
 /**********************************************************
-Very minorly modified from the example by Tim Taylor
-http://tool-man.org/examples/sorting.html
-
-Added Coordinate.prototype.inside( northwest, southeast );
-
-**********************************************************/
+ Very minorly modified from the example by Tim Taylor
+ http://tool-man.org/examples/sorting.html
+ 
+ Added Coordinate.prototype.inside( northwest, southeast );
+ 
+ **********************************************************/
 
 var Coordinates = {
 	ORIGIN : new Coordinate(0, 0),
@@ -283,10 +233,10 @@ Coordinate.prototype.constrain = function(min, max) {
 	var x = this.x;
 	var y = this.y;
 
-	if (min.x !== null) x = Math.max(x, min.x);
-	if (max.x !== null) x = Math.min(x, max.x);
-	if (min.y !== null) y = Math.max(y, min.y);
-	if (max.y !== null) y = Math.min(y, max.y);
+	if (min.x != null) x = Math.max(x, min.x);
+	if (max.x != null) x = Math.min(x, max.x);
+	if (min.y != null) y = Math.max(y, min.y);
+	if (max.y != null) y = Math.min(y, max.y);
 
 	return new Coordinate(x, y);
 };
@@ -314,10 +264,10 @@ Coordinate.prototype.inside = function(northwest, southeast) {
 };
 
 /*
-* drag.js - click & drag DOM elements
-*
-* originally based on Youngpup's dom-drag.js, www.youngpup.net
-*/
+ * drag.js - click & drag DOM elements
+ *
+ * originally based on Youngpup's dom-drag.js, www.youngpup.net
+ */
 
 /**********************************************************
  Further modified from the example by Tim Taylor
@@ -422,12 +372,14 @@ var Drag = {
 		var sePosition = Coordinates.southeastPosition(group);
 		var seOffset = Coordinates.southeastOffset(group, true);
 
-Changed onMouseMove where it calls group.onDrag and then
-adjusts the offset for changes to the DOM.  If the item
-being moved changed parents it would be off so changed to
-get the absolute offset (recursive northwestOffset).
+		group.originalOpacity = group.style.opacity;
+		group.originalZIndex = group.style.zIndex;
+		group.initialWindowCoordinate = mouse;
+		// TODO: need a better name, but don't yet understand how it
+		// participates in the magic while dragging 
+		group.dragCoordinate = mouse;
 
-**********************************************************/
+		Drag.showStatus(mouse, nwPosition, sePosition, nwOffset, seOffset);
 
 		group.onDragStart(nwPosition, sePosition, nwOffset, seOffset);
 
@@ -491,72 +443,48 @@ get the absolute offset (recursive northwestOffset).
 			group.style.opacity = 0.75;
 		}
 
-	return false;
-},
+		// TODO: need better constraint API
+		var adjusted = mouse.constrain(group.mouseMin, group.mouseMax);
+		nwPosition = nwPosition.plus(adjusted.minus(group.dragCoordinate));
+		nwPosition.reposition(group);
+		group.dragCoordinate = adjusted;
 
-showStatus : function(mouse, nwPosition, sePosition, nwOffset, seOffset) {
-	window.status = 
-			"mouse: " + mouse.toString() + "    " + 
-			"NW pos: " + nwPosition.toString() + "    " + 
-			"SE pos: " + sePosition.toString() + "    " + 
-			"NW offset: " + nwOffset.toString() + "    " +
-			"SE offset: " + seOffset.toString();
-},
+		// once dragging has started, the position of the group
+		// relative to the mouse should stay fixed.  They can get out
+		// of sync if the DOM is manipulated while dragging, so we
+		// correct the error here
+		//
+		// TODO: what we really want to do is find the offset from
+		// our corner to the mouse coordinate and adjust to keep it
+		// the same
+		
+		// changed to be recursive/use absolute offset for corrections
+		var offsetBefore = Coordinates.northwestOffset(group, true);
+		group.onDrag(nwPosition, sePosition, nwOffset, seOffset);
+		var offsetAfter = Coordinates.northwestOffset(group, true);
 
-onMouseMove : function(event) {
-	event = Drag.fixEvent(event);
-	var group = Drag.group;
-	var mouse = event.windowCoordinate;
-	var nwOffset = Coordinates.northwestOffset(group, true);
-	var nwPosition = Coordinates.northwestPosition(group);
-	var sePosition = Coordinates.southeastPosition(group);
-	var seOffset = Coordinates.southeastOffset(group, true);
-
-	Drag.showStatus(mouse, nwPosition, sePosition, nwOffset, seOffset);
-
-	if (!Drag.isDragging) {
-		if (group.threshold > 0) {
-			var distance = group.initialWindowCoordinate.distance(
-					mouse);
-			if (distance < group.threshold) return true;
-		} else if (group.thresholdY > 0) {
-			var deltaY = Math.abs(group.initialWindowCoordinate.y - mouse.y);
-			if (deltaY < group.thresholdY) return true;
-		} else if (group.thresholdX > 0) {
-			var deltaX = Math.abs(group.initialWindowCoordinate.x - mouse.x);
-			if (deltaX < group.thresholdX) return true;
+		if (!offsetBefore.equals(offsetAfter)) {
+			var errorDelta = offsetBefore.minus(offsetAfter);
+			nwPosition = Coordinates.northwestPosition(group).plus(errorDelta);
+			nwPosition.reposition(group);
 		}
 
-		Drag.isDragging = true;
-		group.style.zIndex = Drag.BIG_Z_INDEX;
-		group.style.opacity = 0.75;
-	}
+		return false;
+	},
 
-	// TODO: need better constraint API
-	var adjusted = mouse.constrain(group.mouseMin, group.mouseMax);
-	nwPosition = nwPosition.plus(adjusted.minus(group.dragCoordinate));
-	nwPosition.reposition(group);
-	group.dragCoordinate = adjusted;
+	onMouseUp : function(event) {
+		event = Drag.fixEvent(event);
+		var group = Drag.group;
 
-	// once dragging has started, the position of the group
-	// relative to the mouse should stay fixed.  They can get out
-	// of sync if the DOM is manipulated while dragging, so we
-	// correct the error here
-	//
-	// TODO: what we really want to do is find the offset from
-	// our corner to the mouse coordinate and adjust to keep it
-	// the same
-	
-	// changed to be recursive/use absolute offset for corrections
-	var offsetBefore = Coordinates.northwestOffset(group, true);
-	group.onDrag(nwPosition, sePosition, nwOffset, seOffset);
-	var offsetAfter = Coordinates.northwestOffset(group, true);
+		var mouse = event.windowCoordinate;
+		var nwOffset = Coordinates.northwestOffset(group, true);
+		var nwPosition = Coordinates.northwestPosition(group);
+		var sePosition = Coordinates.southeastPosition(group);
+		var seOffset = Coordinates.southeastOffset(group, true);
 
-	if (!offsetBefore.equals(offsetAfter)) {
-		var errorDelta = offsetBefore.minus(offsetAfter);
-		nwPosition = Coordinates.northwestPosition(group).plus(errorDelta);
-		nwPosition.reposition(group);
-	}
+		document.onmousemove = null;
+		document.onmouseup   = null;
+		group.onDragEnd(nwPosition, sePosition, nwOffset, seOffset);
 
 		if (Drag.isDragging) {
 			// restoring zIndex before opacity avoids visual flicker in Firefox
@@ -564,42 +492,29 @@ onMouseMove : function(event) {
 			group.style.opacity = group.originalOpacity;
 		}
 
-	Drag.group = null;
-	Drag.isDragging = false;
+		Drag.group = null;
+		Drag.isDragging = false;
 
-	return false;
-},
+		return false;
+	},
 
-fixEvent : function(event) {
-	if (typeof event == 'undefined') event = window.event;
-	Coordinates.fixEvent(event);
+	fixEvent : function(event) {
+		if (typeof event == 'undefined') event = window.event;
+		Coordinates.fixEvent(event);
 
-	return event;
-}
+		return event;
+	}
 };
 
 /**********************************************************
-Adapted from the sortable lists example by Tim Taylor
-http://tool-man.org/examples/sorting.html
-
-**********************************************************/
+ Adapted from the sortable lists example by Tim Taylor
+ http://tool-man.org/examples/sorting.html
+ 
+ **********************************************************/
 
 var DragDrop = {
-firstContainer : null,
-lastContainer : null,
-
-makeListContainer : function(list) {
-	// each container becomes a linked list node
-	if (this.firstContainer === null) {
-		this.firstContainer = this.lastContainer = list;
-		list.previousContainer = null;
-		list.nextContainer = null;
-	} else {
-		list.previousContainer = this.lastContainer;
-		list.nextContainer = null;
-		this.lastContainer.nextContainer = list;
-		this.lastContainer = list;
-	}
+	firstContainer : null,
+	lastContainer : null,
 	
 	makeListContainer : function(list) {
 		// each container becomes a linked list node
@@ -628,33 +543,17 @@ makeListContainer : function(list) {
 		}
 	},
 
-makeItemDragable : function(item) {
-	Drag.makeDraggable(item);
-	item.setDragThreshold(5);
-	
-	// tracks if the item is currently outside all containers
-	item.isOutside = false;
-	
-	item.onDragStart = DragDrop.onDragStart;
-	item.onDrag = DragDrop.onDrag;
-	item.onDragEnd = DragDrop.onDragEnd;
-},
-
-onDragStart : function(nwPosition, sePosition, nwOffset, seOffset) {
-	// update all container bounds, since they may have changed
-	// on a previous drag
-	//
-	// could be more smart about when to do this
-	var container = DragDrop.firstContainer;
-	while (container !== null) {
-		container.northwest = Coordinates.northwestOffset( container, true );
-		container.southeast = Coordinates.southeastOffset( container, true );
-		container = container.nextContainer;
-	}
-	
-	// item starts out over current parent
-	//this.parentNode.onDragOver();
-},
+	makeItemDragable : function(item) {
+		Drag.makeDraggable(item);
+		item.setDragThreshold(5);
+		
+		// tracks if the item is currently outside all containers
+		item.isOutside = false;
+		
+		item.onDragStart = DragDrop.onDragStart;
+		item.onDrag = DragDrop.onDrag;
+		item.onDragEnd = DragDrop.onDragEnd;
+	},
 
 	onDragStart : function(nwPosition, sePosition, nwOffset, seOffset) {
 		// update all container bounds, since they may have changed
@@ -667,13 +566,6 @@ onDragStart : function(nwPosition, sePosition, nwOffset, seOffset) {
 			container.southeast = Coordinates.southeastOffset( container, true );
 			container = container.nextContainer;
 		}
-		// we're still not inside the bounds of any container
-		if (this.isOutside)
-			return;
-	
-	// check if we're outside our parent's bounds
-	} else if (!(nwOffset.inside( this.parentNode.northwest, this.parentNode.southeast ) ||
-		seOffset.inside( this.parentNode.northwest, this.parentNode.southeast ))) {
 		
 		// item starts out over current parent
 		this.parentNode.onDragOver();
@@ -735,10 +627,10 @@ onDragStart : function(nwPosition, sePosition, nwOffset, seOffset) {
 			if (this.isOutside) {
 				tempParent = this.parentNode.cloneNode( false );
 				this.parentNode.removeChild( this );
-				container.appendChild( this );
-				break;
+				tempParent.appendChild( this );
+				document.getElementsByTagName( "body" ).item(0).appendChild( tempParent );
+				return;
 			}
-			container = container.nextContainer;
 		}
 		
 		// if we get here, we're inside some container bounds, so we do
@@ -774,10 +666,9 @@ onDragStart : function(nwPosition, sePosition, nwOffset, seOffset) {
 		// if the drag ends and we're still outside all containers
 		// it's time to remove ourselves from the document
 		if (this.isOutside) {
-			tempParent = this.parentNode.cloneNode( false );
+			var tempParent = this.parentNode;
 			this.parentNode.removeChild( this );
-			tempParent.appendChild( this );
-			document.getElementsByTagName( "body" ).item(0).appendChild( tempParent );
+			tempParent.parentNode.removeChild( tempParent );
 			return;
 		}
 		this.parentNode.onDragOut();
@@ -813,33 +704,4 @@ var DragUtils = {
 		}
 		return null;
 	}		
-};
-
-var DragUtils = {
-swap : function(item1, item2) {
-	var parent = item1.parentNode;
-	parent.removeChild(item1);
-	parent.insertBefore(item1, item2);
-
-	item1.style.top = "0px";
-	item1.style.left = "0px";
-},
-
-nextItem : function(item) {
-	var sibling = item.nextSibling;
-	while (sibling !== null) {
-		if (sibling.nodeName == item.nodeName) return sibling;
-		sibling = sibling.nextSibling;
-	}
-	return null;
-},
-
-previousItem : function(item) {
-	var sibling = item.previousSibling;
-	while (sibling !== null) {
-		if (sibling.nodeName == item.nodeName) return sibling;
-		sibling = sibling.previousSibling;
-	}
-	return null;
-}		
 };
