@@ -1,46 +1,94 @@
-jQuery(function($) {
-	var cats=[ "Energy", "Healthcare", "Transportation", "Immigration", "Education", "HST" ];
-	
-	var length = cats.length, element = null;
+	jQuery(function($) {
+		var cats=[ "Energy", "Healthcare", "Transportation", "Immigration", "Education", "HST" ];
+		
+		var length = cats.length,
+			element = null,
+			list = null;
 
-	for (var i = 0; i < length; i++) {
-		element = cats[i];
-		var list = document.getElementById(element);
+		var onDragOverHandler = function() {
+			/*
+			this.style["width"] = "200px";
+			this.style["height"] = "200px";
+			this.style["background"] = "#999"; 
+			*/
+		};
+
+		var onDragOutHandler = function() {
+			//this.style["background"] = "none";
+		};
+
+		for (var i = 0; i < length; i++) {
+			element = cats[i];
+			list = document.getElementById(element);
+			DragDrop.makeListContainer( list );
+
+			list.onDragOver = onDragOverHandler;
+			list.onDragOut = onDragOutHandler;
+		}
+
+		//var list = document.getElementById("Options");
+		//DragDrop.makeListContainer( list );
+		
+		list = document.getElementById("Selected");
 		DragDrop.makeListContainer( list );
-	}
+		list.onDragOver = function() { 
+			this.style.border = "1px dashed #AAA"; 
+		};
+		//list.onDragOut = function() {this.style["border"] = "1px solid white"; };
 
-	//list.onDragOver = function() { 
-		//this.style.width = "200px";
-		//this.style.height = "200px";
-		//this.style.background = "#999"; 
-	//};
-
-	//list.onDragOut = function() { 
-		//this.style.background = "none"; 
-	//};
-
-	//var list = document.getElementById("Options");
-	//DragDrop.makeListContainer( list );
-	
-	//list = document.getElementById("Selected");
-	//DragDrop.makeListContainer( list );
-	//list.onDragOver = function() { 
-		//this.style.border = "1px dashed #AAA"; 
-	//};
-	//list.onDragOut = function() {this.style["border"] = "1px solid white"; };
-
-	$("#Submit").bind("click", function() {
-		$("#Selected li").each(function(e) {
-			$(this).addClass($(this).attr("data-party"));
+		$("#Submit").bind("click", function() {
+			$("#Selected li").each(function(e) {
+				$(this).addClass($(this).attr("data-party"));
+			});
+			
+			AddParties();
+			return false;
 		});
 		
-		AddParties();
-		return false;
-	});
-	
-	$("#Interactive h3").bind("click", function() {
-		var duration = 200; // milliseconds
-		var list = $(this).next("ul");
+		$("#Selected ul.boxier li").bind("click", function selectedLiClickHandler() {
+			debugger;
+			console.log("click");
+		});
+		
+		$("#Interactive .boxier li p").bind("click", function selectedBoxClickHandler() {
+			debugger;
+			console.log("click");
+		});
+		
+		$("#Selected ul.boxier p").bind("click", function selectedPClickHandler() {
+			debugger;
+			console.log("click");
+		});
+		
+		$("#Interactive h3").bind("click", function() {
+			var duration = 200; // milliseconds
+			var list = $(this).next("ul");
+
+			if ( list.hasClass( "active" ) ) {
+				list.animate({height:'0px'}, duration, function closeComplete() {
+					list.removeClass( "active" );
+				});
+			} else {
+				// Height animates instantly, but meh: good enough.
+				list.animate({height:'100%'}, duration, function openComplete() {
+					list.addClass( "active" );
+				});
+			}
+		});
+		
+		function AddParties() {
+				$("#Total_NDP em").text($("#Selected .NDP").length);
+				$("#Total_GRN em").text($("#Selected .GRN").length);
+				$("#Total_LIB em").text($("#Selected .LIB").length);
+				$("#Total_CON em").text($("#Selected .CON").length);
+				$("#Total_PA em").text($("#Selected .PA").length);
+		}
+		
+		function updateHeights() {
+			var min_heights=$("#Draggable").height()-100;
+			$("#Interactive .scroller ul.boxy").css({
+				minHeight:min_heights-240
+			});
 
 		if ( list.hasClass( "active" ) ) {
 			list.animate({height:'0px'}, duration, function closeComplete() {
@@ -87,9 +135,39 @@ function simulateTouchEvents(oo,bIgnoreChilds)
 		window.__touchInputs = {INPUT:1,TEXTAREA:1,SELECT:1,OPTION:1,'input':1,'textarea':1,'select':1,'option':1};
 	}
 
-	$(oo).bind('touchstart touchmove touchend', function(ev) {
-		var bSame = (ev.target == this);
-		if( bIgnoreChilds && !bSame ) { return; }
+$(oo).bind('touchstart touchmove touchend', function(ev)
+{
+    var bSame = (ev.target == this);
+    if( bIgnoreChilds && !bSame )
+     { return; }
+
+    var b = (!bSame && ev.target.__ajqmeclk), // Get if object is already tested or input type
+        e = ev.originalEvent;
+    if( b === true || !e.touches || e.touches.length > 1 || !window.__touchTypes[e.type]  )
+     { return; } //allow multi-touch gestures to work
+
+    var oEv = ( !bSame && typeof b != 'boolean')?$(ev.target).data('events'):false;
+
+    b = (!bSame)?(ev.target.__ajqmeclk = oEv?(oEv.click || oEv.mousedown || oEv.mouseup || oEv.mousemove):false ):false;
+
+    if( b || window.__touchInputs[ev.target.tagName] )
+     { return; } //allow default clicks to work (and on inputs)
+
+    // https://developer.mozilla.org/en/DOM/event.initMouseEvent for API
+    var touch = e.changedTouches[0], newEvent = document.createEvent("MouseEvent");
+    newEvent.initMouseEvent(window.__touchTypes[e.type], true, true, window, 1,
+            touch.screenX, touch.screenY,
+            touch.clientX, touch.clientY, false,
+            false, false, false, 0, null);
+
+    touch.target.dispatchEvent(newEvent);
+    e.preventDefault();
+    ev.stopImmediatePropagation();
+    ev.stopPropagation();
+    ev.preventDefault();
+});
+ return true;
+}
 
 		var b = (!bSame && ev.target.__ajqmeclk), // Get if object is already tested or input type
 			e = ev.originalEvent;
@@ -232,7 +310,6 @@ Coordinate.prototype.inside = function(northwest, southeast) {
 		
 		return true;
 	}
-
 	return false;
 };
 
@@ -243,8 +320,107 @@ Coordinate.prototype.inside = function(northwest, southeast) {
 */
 
 /**********************************************************
-Further modified from the example by Tim Taylor
-http://tool-man.org/examples/sorting.html
+ Further modified from the example by Tim Taylor
+ http://tool-man.org/examples/sorting.html
+ 
+ Changed onMouseMove where it calls group.onDrag and then
+ adjusts the offset for changes to the DOM.  If the item
+ being moved changed parents it would be off so changed to
+ get the absolute offset (recursive northwestOffset).
+ 
+ **********************************************************/
+
+var Drag = {
+	BIG_Z_INDEX : 10000,
+	group : null,
+	isDragging : false,
+
+	makeDraggable : function(group) {
+		group.handle = group;
+		group.handle.group = group;
+
+		group.minX = null;
+		group.minY = null;
+		group.maxX = null;
+		group.maxY = null;
+		group.threshold = 0;
+		group.thresholdY = 0;
+		group.thresholdX = 0;
+
+		group.onDragStart = new Function();
+		group.onDragEnd = new Function();
+		group.onDrag = new Function();
+		
+		// TODO: use element.prototype.myFunc
+		group.setDragHandle = Drag.setDragHandle;
+		group.setDragThreshold = Drag.setDragThreshold;
+		group.setDragThresholdX = Drag.setDragThresholdX;
+		group.setDragThresholdY = Drag.setDragThresholdY;
+		group.constrain = Drag.constrain;
+		group.constrainVertical = Drag.constrainVertical;
+		group.constrainHorizontal = Drag.constrainHorizontal;
+
+		group.onmousedown = Drag.onMouseDown;
+	},
+
+	constrainVertical : function() {
+		var nwOffset = Coordinates.northwestOffset(this, true);
+		this.minX = nwOffset.x;
+		this.maxX = nwOffset.x;
+	},
+
+	constrainHorizontal : function() {
+		var nwOffset = Coordinates.northwestOffset(this, true);
+		this.minY = nwOffset.y;
+		this.maxY = nwOffset.y;
+	},
+
+	constrain : function(nwPosition, sePosition) {
+		this.minX = nwPosition.x;
+		this.minY = nwPosition.y;
+		this.maxX = sePosition.x;
+		this.maxY = sePosition.y;
+	},
+
+	setDragHandle : function(handle) {
+		if (handle && handle !== null) 
+			this.handle = handle;
+		else
+			this.handle = this;
+
+		this.handle.group = this;
+		this.onmousedown = null;
+		this.handle.onmousedown = Drag.onMouseDown;
+	},
+
+	setDragThreshold : function(threshold) {
+		if (isNaN(parseInt(threshold))) return;
+
+		this.threshold = threshold;
+	},
+
+	setDragThresholdX : function(threshold) {
+		if (isNaN(parseInt(threshold))) return;
+
+		this.thresholdX = threshold;
+	},
+
+	setDragThresholdY : function(threshold) {
+		if (isNaN(parseInt(threshold))) return;
+
+		this.thresholdY = threshold;
+	},
+
+	onMouseDown : function(event) {
+		event = Drag.fixEvent(event);
+		Drag.group = this.group;
+
+		var group = this.group;
+		var mouse = event.windowCoordinate;
+		var nwOffset = Coordinates.northwestOffset(group, true);
+		var nwPosition = Coordinates.northwestPosition(group);
+		var sePosition = Coordinates.southeastPosition(group);
+		var seOffset = Coordinates.southeastOffset(group, true);
 
 Changed onMouseMove where it calls group.onDrag and then
 adjusts the offset for changes to the DOM.  If the item
@@ -253,127 +429,67 @@ get the absolute offset (recursive northwestOffset).
 
 **********************************************************/
 
-var Drag = {
-BIG_Z_INDEX : 10000,
-group : null,
-isDragging : false,
+		group.onDragStart(nwPosition, sePosition, nwOffset, seOffset);
 
-makeDraggable : function(group) {
-	group.handle = group;
-	group.handle.group = group;
+		// TODO: need better constraint API
+		if (group.minX !== null)
+			group.minMouseX = mouse.x - nwPosition.x + 
+					group.minX - nwOffset.x;
+		if (group.maxX !== null) 
+			group.maxMouseX = group.minMouseX + group.maxX - group.minX;
 
-	group.minX = null;
-	group.minY = null;
-	group.maxX = null;
-	group.maxY = null;
-	group.threshold = 0;
-	group.thresholdY = 0;
-	group.thresholdX = 0;
+		if (group.minY !== null)
+			group.minMouseY = mouse.y - nwPosition.y + 
+					group.minY - nwOffset.y;
+		if (group.maxY !== null) 
+			group.maxMouseY = group.minMouseY + group.maxY - group.minY;
 
-	//group.onDragStart = new Function();
-	//group.onDragEnd = new Function();
-	//group.onDrag = new Function();
-	
-	// TODO: use element.prototype.myFunc
-	group.setDragHandle = Drag.setDragHandle;
-	group.setDragThreshold = Drag.setDragThreshold;
-	group.setDragThresholdX = Drag.setDragThresholdX;
-	group.setDragThresholdY = Drag.setDragThresholdY;
-	group.constrain = Drag.constrain;
-	group.constrainVertical = Drag.constrainVertical;
-	group.constrainHorizontal = Drag.constrainHorizontal;
+		group.mouseMin = new Coordinate(group.minMouseX, group.minMouseY);
+		group.mouseMax = new Coordinate(group.maxMouseX, group.maxMouseY);
 
-	group.onmousedown = Drag.onMouseDown;
-},
+		document.onmousemove = Drag.onMouseMove;
+		document.onmouseup = Drag.onMouseUp;
 
-constrainVertical : function() {
-	var nwOffset = Coordinates.northwestOffset(this, true);
-	this.minX = nwOffset.x;
-	this.maxX = nwOffset.x;
-},
+		return false;
+	},
 
-constrainHorizontal : function() {
-	var nwOffset = Coordinates.northwestOffset(this, true);
-	this.minY = nwOffset.y;
-	this.maxY = nwOffset.y;
-},
+	showStatus : function(mouse, nwPosition, sePosition, nwOffset, seOffset) {
+		window.status = 
+				"mouse: " + mouse.toString() + "    " + 
+				"NW pos: " + nwPosition.toString() + "    " + 
+				"SE pos: " + sePosition.toString() + "    " + 
+				"NW offset: " + nwOffset.toString() + "    " +
+				"SE offset: " + seOffset.toString();
+	},
 
-constrain : function(nwPosition, sePosition) {
-	this.minX = nwPosition.x;
-	this.minY = nwPosition.y;
-	this.maxX = sePosition.x;
-	this.maxY = sePosition.y;
-},
+	onMouseMove : function(event) {
+		event = Drag.fixEvent(event);
+		var group = Drag.group;
+		var mouse = event.windowCoordinate;
+		var nwOffset = Coordinates.northwestOffset(group, true);
+		var nwPosition = Coordinates.northwestPosition(group);
+		var sePosition = Coordinates.southeastPosition(group);
+		var seOffset = Coordinates.southeastOffset(group, true);
 
-setDragHandle : function(handle) {
-	if (handle && handle !== null) 
-		this.handle = handle;
-	else
-		this.handle = this;
+		Drag.showStatus(mouse, nwPosition, sePosition, nwOffset, seOffset);
 
-	this.handle.group = this;
-	this.onmousedown = null;
-	this.handle.onmousedown = Drag.onMouseDown;
-},
+		if (!Drag.isDragging) {
+			if (group.threshold > 0) {
+				var distance = group.initialWindowCoordinate.distance(
+						mouse);
+				if (distance < group.threshold) return true;
+			} else if (group.thresholdY > 0) {
+				var deltaY = Math.abs(group.initialWindowCoordinate.y - mouse.y);
+				if (deltaY < group.thresholdY) return true;
+			} else if (group.thresholdX > 0) {
+				var deltaX = Math.abs(group.initialWindowCoordinate.x - mouse.x);
+				if (deltaX < group.thresholdX) return true;
+			}
 
-setDragThreshold : function(threshold) {
-	if (isNaN(parseInt(threshold))) return;
-
-	this.threshold = threshold;
-},
-
-setDragThresholdX : function(threshold) {
-	if (isNaN(parseInt(threshold))) return;
-
-	this.thresholdX = threshold;
-},
-
-setDragThresholdY : function(threshold) {
-	if (isNaN(parseInt(threshold))) return;
-
-	this.thresholdY = threshold;
-},
-
-onMouseDown : function(event) {
-	event = Drag.fixEvent(event);
-	Drag.group = this.group;
-
-	var group = this.group;
-	var mouse = event.windowCoordinate;
-	var nwOffset = Coordinates.northwestOffset(group, true);
-	var nwPosition = Coordinates.northwestPosition(group);
-	var sePosition = Coordinates.southeastPosition(group);
-	var seOffset = Coordinates.southeastOffset(group, true);
-
-	group.originalOpacity = group.style.opacity;
-	group.originalZIndex = group.style.zIndex;
-	group.initialWindowCoordinate = mouse;
-	// TODO: need a better name, but don't yet understand how it
-	// participates in the magic while dragging 
-	group.dragCoordinate = mouse;
-
-	Drag.showStatus(mouse, nwPosition, sePosition, nwOffset, seOffset);
-
-	group.onDragStart(nwPosition, sePosition, nwOffset, seOffset);
-
-	// TODO: need better constraint API
-	if (group.minX !== null)
-		group.minMouseX = mouse.x - nwPosition.x + 
-				group.minX - nwOffset.x;
-	if (group.maxX !== null) 
-		group.maxMouseX = group.minMouseX + group.maxX - group.minX;
-
-	if (group.minY !== null)
-		group.minMouseY = mouse.y - nwPosition.y + 
-				group.minY - nwOffset.y;
-	if (group.maxY !== null) 
-		group.maxMouseY = group.minMouseY + group.maxY - group.minY;
-
-	group.mouseMin = new Coordinate(group.minMouseX, group.minMouseY);
-	group.mouseMax = new Coordinate(group.maxMouseX, group.maxMouseY);
-
-	document.onmousemove = Drag.onMouseMove;
-	document.onmouseup = Drag.onMouseUp;
+			Drag.isDragging = true;
+			group.style.zIndex = Drag.BIG_Z_INDEX;
+			group.style.opacity = 0.75;
+		}
 
 	return false;
 },
@@ -442,28 +558,11 @@ onMouseMove : function(event) {
 		nwPosition.reposition(group);
 	}
 
-	return false;
-},
-
-onMouseUp : function(event) {
-	event = Drag.fixEvent(event);
-	var group = Drag.group;
-
-	var mouse = event.windowCoordinate;
-	var nwOffset = Coordinates.northwestOffset(group, true);
-	var nwPosition = Coordinates.northwestPosition(group);
-	var sePosition = Coordinates.southeastPosition(group);
-	var seOffset = Coordinates.southeastOffset(group, true);
-
-	document.onmousemove = null;
-	document.onmouseup   = null;
-	group.onDragEnd(nwPosition, sePosition, nwOffset, seOffset);
-
-	if (Drag.isDragging) {
-		// restoring zIndex before opacity avoids visual flicker in Firefox
-		group.style.zIndex = group.originalZIndex;
-		group.style.opacity = group.originalOpacity;
-	}
+		if (Drag.isDragging) {
+			// restoring zIndex before opacity avoids visual flicker in Firefox
+			group.style.zIndex = group.originalZIndex;
+			group.style.opacity = group.originalOpacity;
+		}
 
 	Drag.group = null;
 	Drag.isDragging = false;
@@ -478,14 +577,6 @@ fixEvent : function(event) {
 	return event;
 }
 };
-
-
-
-
-
-
-
-
 
 /**********************************************************
 Adapted from the sortable lists example by Tim Taylor
@@ -510,19 +601,32 @@ makeListContainer : function(list) {
 		this.lastContainer = list;
 	}
 	
-	// these functions are called when an item is draged over
-	// a container or out of a container bounds.  onDragOut
-	// is also called when the drag ends with an item having
-	// been added to the container
-	//list.onDragOver = new Function();
-	//list.onDragOut = new Function();
-	
-	var items = list.getElementsByTagName( "li" );
-	
-	for (var i = 0; i < items.length; i++) {
-		DragDrop.makeItemDragable(items[i]);
-	}
-},
+	makeListContainer : function(list) {
+		// each container becomes a linked list node
+		if (this.firstContainer === null) {
+			this.firstContainer = this.lastContainer = list;
+			list.previousContainer = null;
+			list.nextContainer = null;
+		} else {
+			list.previousContainer = this.lastContainer;
+			list.nextContainer = null;
+			this.lastContainer.nextContainer = list;
+			this.lastContainer = list;
+		}
+		
+		// these functions are called when an item is draged over
+		// a container or out of a container bounds.  onDragOut
+		// is also called when the drag ends with an item having
+		// been added to the container
+		list.onDragOver = new Function();
+		list.onDragOut = new Function();
+		
+		var items = list.getElementsByTagName( "li" );
+		
+		for (var i = 0; i < items.length; i++) {
+			DragDrop.makeItemDragable(items[i]);
+		}
+	},
 
 makeItemDragable : function(item) {
 	Drag.makeDraggable(item);
@@ -552,30 +656,15 @@ onDragStart : function(nwPosition, sePosition, nwOffset, seOffset) {
 	//this.parentNode.onDragOver();
 },
 
-onDrag : function(nwPosition, sePosition, nwOffset, seOffset) {
-	var container = null;
-	var tempParent = null;
-	
-	// check if we were nowhere
-	if (this.isOutside) {
-		// check each container to see if in its bounds
-		container = DragDrop.firstContainer;
+	onDragStart : function(nwPosition, sePosition, nwOffset, seOffset) {
+		// update all container bounds, since they may have changed
+		// on a previous drag
+		//
+		// could be more smart about when to do this
+		var container = DragDrop.firstContainer;
 		while (container !== null) {
-			if (nwOffset.inside( container.northwest, container.southeast ) ||
-				seOffset.inside( container.northwest, container.southeast )) {
-				// we're inside this one
-				container.onDragOver();
-				this.isOutside = false;
-				
-				// since isOutside was true, the current parent is a
-				// temporary clone of some previous container node and
-				// it needs to be removed from the document
-				tempParent = this.parentNode;
-				tempParent.removeChild( this );
-				container.appendChild( this );
-				tempParent.parentNode.removeChild( tempParent );
-				break;
-			}
+			container.northwest = Coordinates.northwestOffset( container, true );
+			container.southeast = Coordinates.southeastOffset( container, true );
 			container = container.nextContainer;
 		}
 		// we're still not inside the bounds of any container
@@ -586,25 +675,104 @@ onDrag : function(nwPosition, sePosition, nwOffset, seOffset) {
 	} else if (!(nwOffset.inside( this.parentNode.northwest, this.parentNode.southeast ) ||
 		seOffset.inside( this.parentNode.northwest, this.parentNode.southeast ))) {
 		
-		this.parentNode.onDragOut();
-		this.isOutside = true;
+		// item starts out over current parent
+		this.parentNode.onDragOver();
+	},
+
+	onDrag : function(nwPosition, sePosition, nwOffset, seOffset) {
+		var container = null,
+			tempParent = null;
+
+		// check if we were nowhere
+		if (this.isOutside) {
+			// check each container to see if in its bounds
+			container = DragDrop.firstContainer;
+			while (container !== null) {
+				if (nwOffset.inside( container.northwest, container.southeast ) ||
+					seOffset.inside( container.northwest, container.southeast )) {
+					// we're inside this one
+					container.onDragOver();
+					this.isOutside = false;
+					
+					// since isOutside was true, the current parent is a
+					// temporary clone of some previous container node and
+					// it needs to be removed from the document
+					tempParent = this.parentNode;
+					tempParent.removeChild( this );
+					container.appendChild( this );
+					tempParent.parentNode.removeChild( tempParent );
+					break;
+				}
+				container = container.nextContainer;
+			}
+			// we're still not inside the bounds of any container
+			if (this.isOutside)
+				return;
 		
-		// check if we're inside a new container's bounds
-		container = DragDrop.firstContainer;
-		while (container !== null) {
-			if (nwOffset.inside( container.northwest, container.southeast ) ||
-				seOffset.inside( container.northwest, container.southeast )) {
-				// we're inside this one
-				container.onDragOver();
-				this.isOutside = false;
+		// check if we're outside our parent's bounds
+		} else if (!(nwOffset.inside( this.parentNode.northwest, this.parentNode.southeast ) ||
+			seOffset.inside( this.parentNode.northwest, this.parentNode.southeast ))) {
+			
+			this.parentNode.onDragOut();
+			this.isOutside = true;
+			
+			// check if we're inside a new container's bounds
+			container = DragDrop.firstContainer;
+			while (container !== null) {
+				if (nwOffset.inside( container.northwest, container.southeast ) ||
+					seOffset.inside( container.northwest, container.southeast )) {
+					// we're inside this one
+					container.onDragOver();
+					this.isOutside = false;
+					this.parentNode.removeChild( this );
+					container.appendChild( this );
+					break;
+				}
+				container = container.nextContainer;
+			}
+			// if we're not in any container now, make a temporary clone of
+			// the previous container node and add it to the document
+			if (this.isOutside) {
+				tempParent = this.parentNode.cloneNode( false );
 				this.parentNode.removeChild( this );
 				container.appendChild( this );
 				break;
 			}
 			container = container.nextContainer;
 		}
-		// if we're not in any container now, make a temporary clone of
-		// the previous container node and add it to the document
+		
+		// if we get here, we're inside some container bounds, so we do
+		// everything the original dragsort script did to swap us into the
+		// correct position
+		
+		var parent = this.parentNode;
+				
+		var item = this;
+		var next = DragUtils.nextItem(item);
+		while (next !== null && this.offsetTop >= next.offsetTop - 2) {
+			item = next;
+			next = DragUtils.nextItem(item);
+		}
+		if (this != item) {
+			DragUtils.swap(this, next);
+			return;
+		}
+
+		item = this;
+		var previous = DragUtils.previousItem(item);
+		while (previous !== null && this.offsetTop <= previous.offsetTop + 2) {
+			item = previous;
+			previous = DragUtils.previousItem(item);
+		}
+		if (this != item) {
+			DragUtils.swap(this, item);
+			return;
+		}
+	},
+
+	onDragEnd : function(nwPosition, sePosition, nwOffset, seOffset) {
+		// if the drag ends and we're still outside all containers
+		// it's time to remove ourselves from the document
 		if (this.isOutside) {
 			tempParent = this.parentNode.cloneNode( false );
 			this.parentNode.removeChild( this );
@@ -612,51 +780,39 @@ onDrag : function(nwPosition, sePosition, nwOffset, seOffset) {
 			document.getElementsByTagName( "body" ).item(0).appendChild( tempParent );
 			return;
 		}
+		this.parentNode.onDragOut();
+		this.style.top = "0px";
+		this.style.left = "0px";
 	}
-	
-	// if we get here, we're inside some container bounds, so we do
-	// everything the original dragsort script did to swap us into the
-	// correct position
-	
-	var parent = this.parentNode;
-			
-	var item = this;
-	var next = DragUtils.nextItem(item);
-	while (next !== null && this.offsetTop >= next.offsetTop - 2) {
-		item = next;
-		next = DragUtils.nextItem(item);
-	}
+};
 
-	if (this != item) {
-		DragUtils.swap(this, next);
-		return;
-	}
+var DragUtils = {
+	swap : function(item1, item2) {
+		var parent = item1.parentNode;
+		parent.removeChild(item1);
+		parent.insertBefore(item1, item2);
 
-	item = this;
-	var previous = DragUtils.previousItem(item);
-	while (previous !== null && this.offsetTop <= previous.offsetTop + 2) {
-		item = previous;
-		previous = DragUtils.previousItem(item);
-	}
-	if (this != item) {
-		DragUtils.swap(this, item);
-		return;
-	}
-},
+		item1.style.top = "0px";
+		item1.style.left = "0px";
+	},
 
-onDragEnd : function(nwPosition, sePosition, nwOffset, seOffset) {
-	// if the drag ends and we're still outside all containers
-	// it's time to remove ourselves from the document
-	if (this.isOutside) {
-		var tempParent = this.parentNode;
-		this.parentNode.removeChild( this );
-		tempParent.parentNode.removeChild( tempParent );
-		return;
-	}
-	this.parentNode.onDragOut();
-	this.style.top = "0px";
-	this.style.left = "0px";
-}
+	nextItem : function(item) {
+		var sibling = item.nextSibling;
+		while (sibling !== null) {
+			if (sibling.nodeName == item.nodeName) return sibling;
+			sibling = sibling.nextSibling;
+		}
+		return null;
+	},
+
+	previousItem : function(item) {
+		var sibling = item.previousSibling;
+		while (sibling !== null) {
+			if (sibling.nodeName == item.nodeName) return sibling;
+			sibling = sibling.previousSibling;
+		}
+		return null;
+	}		
 };
 
 var DragUtils = {
