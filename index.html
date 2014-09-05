@@ -2,12 +2,9 @@
 <!--#include virtual="/i/regional/v11/html/config.html?region=toronto"-->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<title>Test</title>	
-<link rel="stylesheet" type="text/css" href="/includes/provincialelections/nbvotes2014/html/features/pick-platform/css/styles.css" /> 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js" type="text/javascript"></script><script src="/includes/provincialelections/nbvotes2014/html/features/pick-platform/js/scripts.js" type="text/javascript"></script>
-
-	
-
+<title>New Brunswick 2014 Election</title>	
+<link rel="stylesheet" type="text/css" href="css/styles.css" /> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js" type="text/javascript"></script><script src="js/scripts.js" type="text/javascript"></script>
 </head>
 <body>
 
@@ -25,27 +22,25 @@
 		</div>
 
 	<div class="wrap12" id="Totals">
-		<div class="module col3 CON">
-			<h3 id="Total_CON">
-			<a href="http://pcparty.ns.ca/wp-content/uploads/2013/09/PC-Party-of-Nova-Scotia-Platform.pdf" target="_blank">PC<em>0</em></a></h3>
-		</div>
-			<div class="module col3 LIB">
-			<h3 id="Total_LIB">
-			<a href="http://issuu.com/nsliberal/docs/2013-liberal-platform?e=9356014/4886280" target="_blank">LIB<em>0</em></a></h3>
-		</div>
-	
 		<div class="module col3 NDP">
 			<h3 id="Total_NDP">
-			<a href="http://nsndp.ca/platform" target="_blank">NDP<em>0</em></a></h3>
+				<a href="http://nsndp.ca/platform" target="_blank">NDP<em>0</em></a></h3>
 		</div>
-	
+		<div class="module col3 LIB">
+			<h3 id="Total_LIB">
+				<a href="http://issuu.com/nsliberal/docs/2013-liberal-platform?e=9356014/4886280" target="_blank">LIB<em>0</em></a></h3>
+		</div>
+		<div class="module col3 CON">
+			<h3 id="Total_CON">
+				<a href="http://pcparty.ns.ca/wp-content/uploads/2013/09/PC-Party-of-Nova-Scotia-Platform.pdf" target="_blank">PC<em>0</em></a></h3>
+		</div>
 		<div class="module col3 GRN">
 			<h3 id="Total_GRN">
-			<a href="http://greenparty.ns.ca/wp-content/uploads/2013/09/GPNS-platform-doc.pdf" target="_blank">GRN<em>0</em></a></h3>
+				<a href="http://greenparty.ns.ca/wp-content/uploads/2013/09/GPNS-platform-doc.pdf" target="_blank">GRN<em>0</em></a></h3>
 		</div>
 				<div class="module col3 PA">
 			<h3 id="Total_PA">
-			<a href="http://greenparty.ns.ca/wp-content/uploads/2013/09/GPNS-platform-doc.pdf" target="_blank">PA<em>0</em></a></h3>
+				<a href="http://greenparty.ns.ca/wp-content/uploads/2013/09/GPNS-platform-doc.pdf" target="_blank">PA<em>0</em></a></h3>
 		</div>
 		
 	</div>
@@ -54,15 +49,15 @@
 			<h4>
 				Parties&#39; priorities</h4>
 			<div class="scroller">
-				<h3 id="energyid">
+				<h3>
 					<span>&nbsp;</span> Energy</h3>
-				<ul class="sortable boxy" id="Energy">
+				<ul class="sortable boxy active" id="Energy">
 					<li class="cat-energy" data-party="NDP">
 						<p>
 							<i>Energy</i>Import hydroelectric power from the Muskrat Falls dam in Labrador to give the province a new source of renewable energy.</p>
 					</li>
 					<li class="cat-energy" data-party="LIB">
-						<p><a class='delete' href='#'>&times;</a>
+						<p>
 							<i>Energy</i>Break the monopoly held by Nova Scotia&rsquo;s privately owned utility, Nova Scotia Power. Change the rules to make it easier for renewable energy suppliers to compete.</p>
 					</li>
 					
@@ -72,7 +67,7 @@
 					</li>
 
 					
-					<li class="cat-energy" data-party="CON">
+					<li class="cat-energy" data-party="CON" data-cost="10000">
 						<p>
 							<i>Energy</i>Impose a five-year freeze on electricity rates.</p>
 					</li>
@@ -81,7 +76,7 @@
 							<i>Energy</i>Focus on conservation and energy efficiency by focusing more on managing demand and the development of renewable, alternative sources.</p>
 					</li>
 				</ul>
-				<h3 id="healthid">
+				<h3>
 					<span>&nbsp;</span> Health Care</h3>
 				<ul class="sortable boxy" id="Healthcare">
 					<li class="cat-healthcare" data-party="NDP">
@@ -97,7 +92,7 @@
 							<i>Health Care</i>Cut the number of district health authorities from 10 to three: one for Halifax, one for the rest of Nova Scotia and one for the IWK Health Centre. Implement five-year funding greement with the health authorities based on shorter wait times and a province-wide electronic health record system.</p>
 					</li>
 				</ul>
-				<h3 id="transid">
+				<h3>
 					<span>&nbsp;</span> Transportation</h3>
 				<ul class="sortable boxy" id="Transportation">
 					<li class="cat-transportation" data-party="GRN">
@@ -108,12 +103,12 @@
 						<p>
 							<i>Transportation</i>Invest in public transit and community-based transit outside the capital region.</p>
 					</li>
-					<li class="cat-transportation" data-party="CON">		
+					<li class="cat-transportation" data-party="CON">
 						<p>
-							<i>Transportation</i>Expand public transit in Halifax by negotiating with Halifax Regional Municipality to create a regional transportation authority that would merge Halifax Harbour Bridges, Metro Transit and similarly aligned agencies under one roof.<a href="#" onclick="x">x</a></p>
+							<i>Transportation</i>Expand public transit in Halifax by negotiating with Halifax Regional Municipality to create a regional transportation authority that would merge Halifax Harbour Bridges, Metro Transit and similarly aligned agencies under one roof.</p>
 					</li>
 				</ul>
-				<h3 id="immiid">
+				<h3>
 					<span>&nbsp;</span> Immigration</h3>
 				<ul class="sortable boxy" id="Immigration">
 					<li class="cat-immigration" data-party="GRN">
@@ -129,7 +124,7 @@
 							<i>Immigration</i>Build a case with the federal government to permanently increase the cap for new Canadians to the province under the provincial nominee program, with a goal to increase the population of Nova Scotia to one million by 2025.</p>
 					</li>
 				</ul>
-				<h3 id="eduid">
+				<h3>
 					<span>&nbsp;</span> Education</h3>
 				<ul class="sortable boxy" id="Education">
 					<li class="cat-education" data-party="GRN">
@@ -165,7 +160,7 @@
 							<i>Education</i>Provide stable funding to universities and the Nova Scotia Community College through a five-year agreement with post-secondary institutions.</p>
 					</li>
 				</ul>
-				<h3 id="hstid">
+				<h3>
 					<span>&nbsp;</span> Harmonized Sales Tax</h3>
 				<ul class="sortable boxy" id="HST">
 					<li class="cat-hst" data-party="NDP">
@@ -190,6 +185,8 @@
 		<div class="split">
 			<h4>
 				Your priorities</h4>
+				
+				<a href="#Submit" id="Submit">Reveal the parties!</a>
 			<div class="scroller" id="S1">
 				<ul class="sortable boxier" id="Selected">
 				</ul>
@@ -197,7 +194,7 @@
 	
 	<div class="wrap12">
 		<div class="col12">
-			<a href="#Submit" id="Submit">Reveal your platform!</a></div>
+			<a href="#Submit" id="Submit">Reveal the parties!</a></div>
 	</div>
 </div>
 

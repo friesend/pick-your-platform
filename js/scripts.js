@@ -2,32 +2,37 @@
 		var cats=[ "Energy", "Healthcare", "Transportation", "Immigration", "Education", "HST" ];
 		
 		var length = cats.length,
-			element = null;
+			element = null,
+			list = null;
+
+		var onDragOverHandler = function() {
+			/*
+			this.style["width"] = "200px";
+			this.style["height"] = "200px";
+			this.style["background"] = "#999"; 
+			*/
+		};
+
+		var onDragOutHandler = function() {
+			//this.style["background"] = "none";
+		};
+
 		for (var i = 0; i < length; i++) {
-		  element = cats[i];
-		  var list = document.getElementById(element);
-		  DragDrop.makeListContainer( list );
+			element = cats[i];
+			list = document.getElementById(element);
+			DragDrop.makeListContainer( list );
 
-		  list.onDragOver = function() { 
-		  /*
-			  this.style["width"] = "200px";
-			  this.style["height"] = "200px";
-		  	  this.style["background"] = "#999"; 
-			 */
-		  };
-
-		  list.onDragOut = function() { 
-		  	//this.style["background"] = "none"; 
-		  };
+			list.onDragOver = onDragOverHandler;
+			list.onDragOut = onDragOutHandler;
 		}
-		
+
 		//var list = document.getElementById("Options");
 		//DragDrop.makeListContainer( list );
 		
 		list = document.getElementById("Selected");
 		DragDrop.makeListContainer( list );
 		list.onDragOver = function() { 
-			this.style["border"] = "1px dashed #AAA"; 
+			this.style.border = "1px dashed #AAA"; 
 		};
 		//list.onDragOut = function() {this.style["border"] = "1px solid white"; };
 
@@ -40,28 +45,36 @@
 			return false;
 		});
 		
+		$("#Selected ul.boxier li").bind("click", function selectedLiClickHandler() {
+			debugger;
+			console.log("click");
+		});
+		
+		$("#Interactive .boxier li p").bind("click", function selectedBoxClickHandler() {
+			debugger;
+			console.log("click");
+		});
+		
+		$("#Selected ul.boxier p").bind("click", function selectedPClickHandler() {
+			debugger;
+			console.log("click");
+		});
 		
 		$("#Interactive h3").bind("click", function() {
+			var duration = 200; // milliseconds
+			var list = $(this).next("ul");
 
-		
-		
-		if ( $( this ).next("ul").hasClass( "active" ) ) {
-		$( this ).next("ul").removeClass( "active" );
-	
-
-	}
-else
-$("*").removeClass("active");
-			  $( this ).next("ul").addClass( "active" );
-			
-
-  
-	});
-	
-	
-
-
-		
+			if ( list.hasClass( "active" ) ) {
+				list.animate({height:'0px'}, duration, function closeComplete() {
+					list.removeClass( "active" );
+				});
+			} else {
+				// Height animates instantly, but meh: good enough.
+				list.animate({height:'100%'}, duration, function openComplete() {
+					list.addClass( "active" );
+				});
+			}
+		});
 		
 		function AddParties() {
 				$("#Total_NDP em").text($("#Selected .NDP").length);
@@ -109,8 +122,9 @@ $(oo).bind('touchstart touchmove touchend', function(ev)
     if( b === true || !e.touches || e.touches.length > 1 || !window.__touchTypes[e.type]  )
      { return; } //allow multi-touch gestures to work
 
-    var oEv = ( !bSame && typeof b != 'boolean')?$(ev.target).data('events'):false,
-        b = (!bSame)?(ev.target.__ajqmeclk = oEv?(oEv['click'] || oEv['mousedown'] || oEv['mouseup'] || oEv['mousemove']):false ):false;
+    var oEv = ( !bSame && typeof b != 'boolean')?$(ev.target).data('events'):false;
+
+    b = (!bSame)?(ev.target.__ajqmeclk = oEv?(oEv.click || oEv.mousedown || oEv.mouseup || oEv.mousemove):false ):false;
 
     if( b || window.__touchInputs[ev.target.tagName] )
      { return; } //allow default clicks to work (and on inputs)
@@ -129,7 +143,7 @@ $(oo).bind('touchstart touchmove touchend', function(ev)
     ev.preventDefault();
 });
  return true;
-};
+}
 
 
 
@@ -190,28 +204,28 @@ function Coordinate(x, y) {
 
 Coordinate.prototype.toString = function() {
 	return "(" + this.x + "," + this.y + ")";
-}
+};
 
 Coordinate.prototype.plus = function(that) {
 	return new Coordinate(this.x + that.x, this.y + that.y);
-}
+};
 
 Coordinate.prototype.minus = function(that) {
 	return new Coordinate(this.x - that.x, this.y - that.y);
-}
+};
 
 Coordinate.prototype.distance = function(that) {
 	var deltaX = this.x - that.x;
 	var deltaY = this.y - that.y;
 
 	return Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
-}
+};
 
 Coordinate.prototype.max = function(that) {
 	var x = Math.max(this.x, that.x);
 	var y = Math.max(this.y, that.y);
 	return new Coordinate(x, y);
-}
+};
 
 Coordinate.prototype.constrain = function(min, max) {
 	if (min.x > max.x || min.y > max.y) return this;
@@ -225,19 +239,19 @@ Coordinate.prototype.constrain = function(min, max) {
 	if (max.y != null) y = Math.min(y, max.y);
 
 	return new Coordinate(x, y);
-}
+};
 
 Coordinate.prototype.reposition = function(element) {
-	element.style["top"] = this.y + "px";
-	element.style["left"] = this.x + "px";
-}
+	element.style.top = this.y + "px";
+	element.style.left = this.x + "px";
+};
 
 Coordinate.prototype.equals = function(that) {
 	if (this == that) return true;
-	if (!that || that == null) return false;
+	if (!that || that === null) return false;
 
 	return this.x == that.x && this.y == that.y;
-}
+};
 
 // returns true of this point is inside specified box
 Coordinate.prototype.inside = function(northwest, southeast) {
@@ -247,13 +261,7 @@ Coordinate.prototype.inside = function(northwest, southeast) {
 		return true;
 	}
 	return false;
-}
-
-
-
-
-
-
+};
 
 /*
  * drag.js - click & drag DOM elements
@@ -325,7 +333,7 @@ var Drag = {
 	},
 
 	setDragHandle : function(handle) {
-		if (handle && handle != null) 
+		if (handle && handle !== null) 
 			this.handle = handle;
 		else
 			this.handle = this;
@@ -376,16 +384,16 @@ var Drag = {
 		group.onDragStart(nwPosition, sePosition, nwOffset, seOffset);
 
 		// TODO: need better constraint API
-		if (group.minX != null)
+		if (group.minX !== null)
 			group.minMouseX = mouse.x - nwPosition.x + 
 					group.minX - nwOffset.x;
-		if (group.maxX != null) 
+		if (group.maxX !== null) 
 			group.maxMouseX = group.minMouseX + group.maxX - group.minX;
 
-		if (group.minY != null)
+		if (group.minY !== null)
 			group.minMouseY = mouse.y - nwPosition.y + 
 					group.minY - nwOffset.y;
-		if (group.maxY != null) 
+		if (group.maxY !== null) 
 			group.maxMouseY = group.minMouseY + group.maxY - group.minY;
 
 		group.mouseMin = new Coordinate(group.minMouseX, group.minMouseY);
@@ -431,8 +439,8 @@ var Drag = {
 			}
 
 			Drag.isDragging = true;
-			group.style["zIndex"] = Drag.BIG_Z_INDEX;
-			group.style["opacity"] = 0.75;
+			group.style.zIndex = Drag.BIG_Z_INDEX;
+			group.style.opacity = 0.75;
 		}
 
 		// TODO: need better constraint API
@@ -480,8 +488,8 @@ var Drag = {
 
 		if (Drag.isDragging) {
 			// restoring zIndex before opacity avoids visual flicker in Firefox
-			group.style["zIndex"] = group.originalZIndex;
-			group.style["opacity"] = group.originalOpacity;
+			group.style.zIndex = group.originalZIndex;
+			group.style.opacity = group.originalOpacity;
 		}
 
 		Drag.group = null;
@@ -498,14 +506,6 @@ var Drag = {
 	}
 };
 
-
-
-
-
-
-
-
-
 /**********************************************************
  Adapted from the sortable lists example by Tim Taylor
  http://tool-man.org/examples/sorting.html
@@ -518,7 +518,7 @@ var DragDrop = {
 	
 	makeListContainer : function(list) {
 		// each container becomes a linked list node
-		if (this.firstContainer == null) {
+		if (this.firstContainer === null) {
 			this.firstContainer = this.lastContainer = list;
 			list.previousContainer = null;
 			list.nextContainer = null;
@@ -536,8 +536,8 @@ var DragDrop = {
 		list.onDragOver = new Function();
 		list.onDragOut = new Function();
 		
-    	var items = list.getElementsByTagName( "li" );
-    	
+		var items = list.getElementsByTagName( "li" );
+		
 		for (var i = 0; i < items.length; i++) {
 			DragDrop.makeItemDragable(items[i]);
 		}
@@ -561,7 +561,7 @@ var DragDrop = {
 		//
 		// could be more smart about when to do this
 		var container = DragDrop.firstContainer;
-		while (container != null) {
+		while (container !== null) {
 			container.northwest = Coordinates.northwestOffset( container, true );
 			container.southeast = Coordinates.southeastOffset( container, true );
 			container = container.nextContainer;
@@ -572,11 +572,14 @@ var DragDrop = {
 	},
 
 	onDrag : function(nwPosition, sePosition, nwOffset, seOffset) {
+		var container = null,
+			tempParent = null;
+
 		// check if we were nowhere
 		if (this.isOutside) {
 			// check each container to see if in its bounds
-			var container = DragDrop.firstContainer;
-			while (container != null) {
+			container = DragDrop.firstContainer;
+			while (container !== null) {
 				if (nwOffset.inside( container.northwest, container.southeast ) ||
 					seOffset.inside( container.northwest, container.southeast )) {
 					// we're inside this one
@@ -586,7 +589,7 @@ var DragDrop = {
 					// since isOutside was true, the current parent is a
 					// temporary clone of some previous container node and
 					// it needs to be removed from the document
-					var tempParent = this.parentNode;
+					tempParent = this.parentNode;
 					tempParent.removeChild( this );
 					container.appendChild( this );
 					tempParent.parentNode.removeChild( tempParent );
@@ -606,8 +609,8 @@ var DragDrop = {
 			this.isOutside = true;
 			
 			// check if we're inside a new container's bounds
-			var container = DragDrop.firstContainer;
-			while (container != null) {
+			container = DragDrop.firstContainer;
+			while (container !== null) {
 				if (nwOffset.inside( container.northwest, container.southeast ) ||
 					seOffset.inside( container.northwest, container.southeast )) {
 					// we're inside this one
@@ -622,7 +625,7 @@ var DragDrop = {
 			// if we're not in any container now, make a temporary clone of
 			// the previous container node and add it to the document
 			if (this.isOutside) {
-				var tempParent = this.parentNode.cloneNode( false );
+				tempParent = this.parentNode.cloneNode( false );
 				this.parentNode.removeChild( this );
 				tempParent.appendChild( this );
 				document.getElementsByTagName( "body" ).item(0).appendChild( tempParent );
@@ -638,20 +641,20 @@ var DragDrop = {
 				
 		var item = this;
 		var next = DragUtils.nextItem(item);
-		while (next != null && this.offsetTop >= next.offsetTop - 2) {
-			var item = next;
-			var next = DragUtils.nextItem(item);
+		while (next !== null && this.offsetTop >= next.offsetTop - 2) {
+			item = next;
+			next = DragUtils.nextItem(item);
 		}
 		if (this != item) {
 			DragUtils.swap(this, next);
 			return;
 		}
 
-		var item = this;
+		item = this;
 		var previous = DragUtils.previousItem(item);
-		while (previous != null && this.offsetTop <= previous.offsetTop + 2) {
-			var item = previous;
-			var previous = DragUtils.previousItem(item);
+		while (previous !== null && this.offsetTop <= previous.offsetTop + 2) {
+			item = previous;
+			previous = DragUtils.previousItem(item);
 		}
 		if (this != item) {
 			DragUtils.swap(this, item);
@@ -669,8 +672,8 @@ var DragDrop = {
 			return;
 		}
 		this.parentNode.onDragOut();
-		this.style["top"] = "0px";
-		this.style["left"] = "0px";
+		this.style.top = "0px";
+		this.style.left = "0px";
 	}
 };
 
@@ -680,13 +683,13 @@ var DragUtils = {
 		parent.removeChild(item1);
 		parent.insertBefore(item1, item2);
 
-		item1.style["top"] = "0px";
-		item1.style["left"] = "0px";
+		item1.style.top = "0px";
+		item1.style.left = "0px";
 	},
 
 	nextItem : function(item) {
 		var sibling = item.nextSibling;
-		while (sibling != null) {
+		while (sibling !== null) {
 			if (sibling.nodeName == item.nodeName) return sibling;
 			sibling = sibling.nextSibling;
 		}
@@ -695,7 +698,7 @@ var DragUtils = {
 
 	previousItem : function(item) {
 		var sibling = item.previousSibling;
-		while (sibling != null) {
+		while (sibling !== null) {
 			if (sibling.nodeName == item.nodeName) return sibling;
 			sibling = sibling.previousSibling;
 		}
