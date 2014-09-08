@@ -97,10 +97,9 @@
 					list.removeClass( "active" );
 				});
 			} else {
-				// Height animates instantly, but meh: good enough.
-				list.animate({height:'100%'}, duration, function openComplete() {
+				//list.animate({height:'100%'}, duration, function openComplete() {
 					list.addClass( "active" );
-				});
+				//});
 			}
 		});
 		
