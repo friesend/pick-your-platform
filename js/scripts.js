@@ -50,6 +50,7 @@
 			console.log(x);
 			// If the current item is not selected move it to the selected list.
 			// If the current item is not selected move it to the starting list.
+			// Update the deficit calculator.
 			debugger;
 		});
 		
