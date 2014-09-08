@@ -44,20 +44,13 @@
 			AddParties();
 			return false;
 		});
-		
-		$("#Selected ul.boxier li").bind("click", function selectedLiClickHandler() {
+
+		$("#Interactive li").bind("click", function itemClickHandler() {
+			var x = $(this);
+			console.log(x);
+			// If the current item is not selected move it to the selected list.
+			// If the current item is not selected move it to the starting list.
 			debugger;
-			console.log("click");
-		});
-		
-		$("#Interactive .boxier li p").bind("click", function selectedBoxClickHandler() {
-			debugger;
-			console.log("click");
-		});
-		
-		$("#Selected ul.boxier p").bind("click", function selectedPClickHandler() {
-			debugger;
-			console.log("click");
 		});
 		
 		$("#Interactive h3").bind("click", function() {
@@ -144,11 +137,6 @@ $(oo).bind('touchstart touchmove touchend', function(ev)
 });
  return true;
 }
-
-
-
-
-
 
 /**********************************************************
  Very minorly modified from the example by Tim Taylor
@@ -666,11 +654,13 @@ var DragDrop = {
 		// if the drag ends and we're still outside all containers
 		// it's time to remove ourselves from the document
 		if (this.isOutside) {
+			// TODO: NOT THIS: return to previous list.
 			var tempParent = this.parentNode;
 			this.parentNode.removeChild( this );
 			tempParent.parentNode.removeChild( tempParent );
 			return;
 		}
+
 		this.parentNode.onDragOut();
 		this.style.top = "0px";
 		this.style.left = "0px";
