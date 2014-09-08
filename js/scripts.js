@@ -5,6 +5,9 @@
 			element = null,
 			list = null;
 
+		// Animation duration
+		var duration = 200; // milliseconds	
+
 		var onDragOverHandler = function() {
 			/*
 			this.style["width"] = "200px";
@@ -70,7 +73,15 @@
 			// Now that we have a targetList, add to it.
 			$(targetList).append(node);
 
-			// TODO: Do a fade out/fade in.
+			// Fade out/fade in.
+			node.fadeOut({
+				duration: duration,
+				complete: function() {
+					node.fadeIn({
+						duration: duration
+					});
+				}
+			});
 			
 			// TODO: Update the deficit calculator.
 			var cost = node.attr("data-cost");
@@ -79,7 +90,6 @@
 		});
 		
 		$("#Interactive h3").bind("click", function() {
-			var duration = 200; // milliseconds
 			var list = $(this).next("ul");
 
 			if ( list.hasClass( "active" ) ) {
