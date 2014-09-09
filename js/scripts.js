@@ -39,7 +39,17 @@
 		};
 		//list.onDragOut = function() {this.style["border"] = "1px solid white"; };
 
-		$("#Submit").bind("click", function() {
+		// GROSS HAX to make both buttons work :/
+		$("#Submit1").bind("click", function() {
+			$("#Selected li").each(function(e) {
+				$(this).addClass($(this).attr("data-party"));
+			});
+			
+			AddParties();
+			return false;
+		});
+
+		$("#Submit2").bind("click", function() {
 			$("#Selected li").each(function(e) {
 				$(this).addClass($(this).attr("data-party"));
 			});
@@ -93,9 +103,8 @@
 			var list = $(this).next("ul");
 
 			if ( list.hasClass( "active" ) ) {
-				list.animate({height:'0px'}, duration, function closeComplete() {
-					list.removeClass( "active" );
-				});
+				//list.animate({height:'0px'}, duration);
+				list.removeClass( "active" );
 			} else {
 				//list.animate({height:'100%'}, duration, function openComplete() {
 					list.addClass( "active" );
