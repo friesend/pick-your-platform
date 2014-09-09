@@ -5,6 +5,9 @@
 			element = null,
 			list = null;
 
+		// Animation duration
+		var duration = 200; // milliseconds	
+
 		var onDragOverHandler = function() {
 			/*
 			this.style["width"] = "200px";
@@ -46,15 +49,47 @@
 		});
 
 		$("#Interactive li").bind("click", function itemClickHandler() {
-			var x = $(this);
-			console.log(x);
-			// If the current item is not selected move it to the selected list.
-			// If the current item is not selected move it to the starting list.
-			debugger;
+			var node = $(this);
+			var list = node.closest("ul");
+			var targetList = null;
+
+			// Set targetList to the list we're going to move node to.
+			if (list.attr("id") === "Selected") {
+				// If the current item is selected move it to its starting list.
+				targetList = node.attr("data-list");
+			}
+			else if (list.attr("id") !== "Selected") {
+				// If the current item is not selected move it to the selected list.
+				targetList = "#Selected";
+			}
+			else
+			{
+				console.error("Shouldn't get here -- we're outside of a list!");
+
+				// Just dump it into Selected. 
+				targetList = "#Selected";
+			}
+
+			// Now that we have a targetList, add to it.
+			$(targetList).append(node);
+
+			// Fade out/fade in.
+			node.fadeOut({
+				duration: duration,
+				complete: function() {
+					node.fadeIn({
+						duration: duration
+					});
+				}
+			});
+			
+			// TODO: Update the deficit calculator.
+			var cost = node.attr("data-cost");
+
+			//debugger;
 		});
 		
 		$("#Interactive h3").bind("click", function() {
-			var duration = 200; // milliseconds
 			var list = $(this).next("ul");
 
 			if ( list.hasClass( "active" ) ) {
@@ -62,10 +97,9 @@
 					list.removeClass( "active" );
 				});
 			} else {
-				// Height animates instantly, but meh: good enough.
-				list.animate({height:'100%'}, duration, function openComplete() {
+				//list.animate({height:'100%'}, duration, function openComplete() {
 					list.addClass( "active" );
-				});
+				//});
 			}
 		});
 		
@@ -106,36 +140,37 @@ function simulateTouchEvents(oo,bIgnoreChilds)
 
 $(oo).bind('touchstart touchmove touchend', function(ev)
 {
-    var bSame = (ev.target == this);
-    if( bIgnoreChilds && !bSame )
-     { return; }
+	var bSame = (ev.target == this);
+	if( bIgnoreChilds && !bSame )
+	{ return; }
 
-    var b = (!bSame && ev.target.__ajqmeclk), // Get if object is already tested or input type
-        e = ev.originalEvent;
-    if( b === true || !e.touches || e.touches.length > 1 || !window.__touchTypes[e.type]  )
-     { return; } //allow multi-touch gestures to work
+	var b = (!bSame && ev.target.__ajqmeclk), // Get if object is already tested or input type
+		e = ev.originalEvent;
+	if( b === true || !e.touches || e.touches.length > 1 || !window.__touchTypes[e.type]  )
+	{ return; } //allow multi-touch gestures to work
 
-    var oEv = ( !bSame && typeof b != 'boolean')?$(ev.target).data('events'):false;
+	var oEv = ( !bSame && typeof b != 'boolean')?$(ev.target).data('events'):false;
 
-    b = (!bSame)?(ev.target.__ajqmeclk = oEv?(oEv.click || oEv.mousedown || oEv.mouseup || oEv.mousemove):false ):false;
+	b = (!bSame)?(ev.target.__ajqmeclk = oEv?(oEv.click || oEv.mousedown || oEv.mouseup || oEv.mousemove):false ):false;
 
-    if( b || window.__touchInputs[ev.target.tagName] )
-     { return; } //allow default clicks to work (and on inputs)
+	if( b || window.__touchInputs[ev.target.tagName] )
+	{ return; } //allow default clicks to work (and on inputs)
 
-    // https://developer.mozilla.org/en/DOM/event.initMouseEvent for API
-    var touch = e.changedTouches[0], newEvent = document.createEvent("MouseEvent");
-    newEvent.initMouseEvent(window.__touchTypes[e.type], true, true, window, 1,
-            touch.screenX, touch.screenY,
-            touch.clientX, touch.clientY, false,
-            false, false, false, 0, null);
+	// https://developer.mozilla.org/en/DOM/event.initMouseEvent for API
+	var touch = e.changedTouches[0], newEvent = document.createEvent("MouseEvent");
+	newEvent.initMouseEvent(window.__touchTypes[e.type], true, true, window, 1,
+		touch.screenX, touch.screenY,
+		touch.clientX, touch.clientY, false,
+		false, false, false, 0, null);
 
-    touch.target.dispatchEvent(newEvent);
-    e.preventDefault();
-    ev.stopImmediatePropagation();
-    ev.stopPropagation();
-    ev.preventDefault();
-});
- return true;
+		touch.target.dispatchEvent(newEvent);
+		e.preventDefault();
+		ev.stopImmediatePropagation();
+		ev.stopPropagation();
+		ev.preventDefault();
+	});
+
+	return true;
 }
 
 /**********************************************************
