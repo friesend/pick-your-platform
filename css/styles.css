@@ -91,7 +91,7 @@ ul.sortable li { position: relative; }
 #Interactive ul li:last-child { margin-bottom:0; }	
 #S1 {}
 
-#Submit {
+#Submit1, #Submit2 {
 	font-family: 'StagMedium';
 	padding-top:15px;
 	letter-spacing:2px;
